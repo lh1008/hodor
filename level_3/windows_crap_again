@@ -1,14 +1,27 @@
 #!/usr/bin/python3
 import mechanize
+from bs4 import BeautifulSoup
 browser = mechanize.Browser()
-url = 'http://158.69.76.135/level2.php'
+url = 'http://158.69.76.135/level3.php'
 headers = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0')]
 browser.addheaders = (headers)
 response = browser.open(url)
-for i in range(1024):
+for i in range(1):
     browser.select_form(nr=0)
     input = browser.form.find_control("id")
     input.value="1209"
+    soup = BeautifulSoup(response.get_data(), features="lxml")
+    img_list = soup.findAll('img')
+    print(img_list[1]["src"])
+    new_img_url = url
+    new_img_url = new_img_url.replace('/level3.php', img_list[1]["src"])
+    print(new_img_url)
+    open_new_url = browser.open_novisit(new_img_url)
+    img_open = open('captcha.png', 'w+b')
+    new_file_array = bytearray(open_new_url.read())
+    img_open.write(new_file_array)
+    img_open.close()
+    """
     key = browser.form.find_control("key")
     print(key.value)
     res = browser.submit().read().decode('ascii')
@@ -16,3 +29,4 @@ for i in range(1024):
         print(res)
     print(i)
     browser.open(url)
+"""
